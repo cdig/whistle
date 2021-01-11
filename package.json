@@ -1,0 +1,28 @@
+{
+  "name": "Whistle",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "main": "build/main.js",
+  "scripts": {
+    "coffee:assemble": "fd . -e coffee coffee | xargs awk '(FNR==1){print \"\\n\\n# \" FILENAME}1' node_modules/take-and-make/source/*.coffee node_modules/doom/*.coffee > build/app.coffee",
+    "coffee:build": "coffee --bare --inline-map --output build/app.js --compile build/app.coffee",
+    "coffee:compile": "run-s coffee:assemble coffee:build",
+    "coffee:watch": "onchange 'coffee/**/*.coffee' -- npm run coffee:compile",
+    "scss:assemble": "fd . -e scss scss | xargs awk '(FNR==1){print \"\\n\\n// \" FILENAME}1' > build/app.scss",
+    "scss:build": "sass build/app.scss build/app.css --no-source-map",
+    "scss:compile": "run-s scss:assemble scss:build",
+    "scss:watch": "onchange 'scss/**/*.scss' -- npm run scss:compile",
+    "electron": "electron .",
+    "start": "npm-run-all *:compile --parallel *:watch electron"
+  },
+  "dependencies": {
+    "doom": "ivanreese/doom",
+    "take-and-make": "cdig/take-and-make"
+  },
+  "devDependencies": {
+    "electron": "11.1.1",
+    "electron-reload": "^1.5.0",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0"
+  }
+}

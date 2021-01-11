@@ -1,0 +1,19 @@
+
+
+// scss/app.scss
+* {
+  box-sizing: border-box;
+}
+
+[contenteditable] {
+  user-select: text;
+  cursor: text;
+}
+
+body {
+  margin: 0;
+}
+
+nav {
+  margin: 1em;
+}

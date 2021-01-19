@@ -1,0 +1,23 @@
+button,
+.button {
+  display: inline-block;
+  padding: .6em .8em;
+  border: 2px solid transparent; // Prepare for :focus-visible
+  outline: none;
+  border-radius: 4px;
+  line-height: 1; // If you don't have this, buttons will sometimes be different heights if they contain characters that aren't included in our subset version of Lato
+  text-align: center;
+  text-decoration: none; // Override <a> default
+  color: white;
+  background-color: var(--bg-xl);
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(white, 0);
+
+  &:hover { opacity: .75; } // We'd prefer to darken the color, but that will have to wait for CSS Color Level 5
+  &:active { opacity: .5; }
+  &:focus-visible { border-color: white; }
+}
+
+button-group > button:not(:first-of-type) { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 1px; }
+button-group > button:not(:last-of-type) { border-top-right-radius: 0; border-bottom-right-radius: 0; }

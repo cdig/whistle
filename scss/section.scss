@@ -1,0 +1,13 @@
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: .5em;
+  margin: .5em;
+  background: #fff;
+
+  & > * {
+    margin: 0 1em;
+  }
+}

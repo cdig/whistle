@@ -1,6 +1,6 @@
 "use strict";
 
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, session } = require("electron");
 const path = require("path");
 require("electron-reload")(__dirname);
 
@@ -10,7 +10,8 @@ app.on("ready", () => {
     height: 960,
     backgroundColor: "#fff",
     webPreferences: {
-      nodeIntegration: true
+      contextIsolation: true,
+      nodeIntegration: false
     }
   });
   win.loadFile("build/index.html");

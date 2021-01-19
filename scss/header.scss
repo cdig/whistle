@@ -1,0 +1,14 @@
+header {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  border-bottom: 1px solid hsla(227, 45%, 40%, .5);
+  color: white;
+  background: var(--bg-gradient);
+  box-shadow: 0 2px 6px hsla(227, 45%, 40%, .6);
+}

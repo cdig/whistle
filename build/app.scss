@@ -1,19 +1,426 @@
 
 
-// scss/app.scss
-* {
-  box-sizing: border-box;
+// submodule/house-style/fonts.css
+@font-face {
+  font-family: "LBSLato";
+  src: url("https://s3.lunchboxsessions.com/fonts/lato/lato-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "LBSLato";
+  src: url("https://s3.lunchboxsessions.com/fonts/lato/lato-bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "LBSLato";
+  src: url("https://s3.lunchboxsessions.com/fonts/lato/lato-black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: fallback;
 }
 
-[contenteditable] {
-  user-select: text;
-  cursor: text;
+
+// submodule/house-style/reset.css
+html {
+  /* Don't re-scale our text on mobile. (Normalize) */
+  /* TODO: Verify that autoprefixer is generating -moz and -webkit prefixes for this. */
+  text-size-adjust: none;
+
+  /* Disable double-tap to zoom, and thus remove the 300ms click delay on tap. */
+  touch-action: manipulation;
+
+  /* TODO: This belongs in the framework, not the reset. */
+  /* Highlight taps */
+  -webkit-tap-highlight-color: rgba(white, .3);
+
+  /* TODO: This belongs in the framework, not the reset. */
+  /* Scale fonts more accurately, rather than rounding to the nearest integer size. */
+  /* Note that this might change or disable kerning, ligatures, and other features. */
+  text-rendering: geometricPrecision;
 }
 
-body {
+/* Remove the UA default margin that all browsers add (Normalize) */
+body { margin: 0; }
+
+/* TODO: This belongs in the framework, not the reset. */
+/* Remove the UA default margin (Normalize) */
+h1, h2, h3, h4, h5, h6, p {
   margin: 0;
 }
 
-nav {
-  margin: 1em;
+/* TODO: This belongs in the framework, not the reset. */
+/* Allow us to declare subtrees as non-selectable, so they act like OS GUI rather than like documents */
+.ui, .ui * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  touch-action: manipulation;
+}
+
+/* TODO: This belongs in the framework, not the reset. */
+/* Sometimes, we'll need a selectable subtree within a UI subtree */
+.selectable, .selectable * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  cursor: auto;
+  touch-action: auto;
+}
+
+/* Apply a natural box layout model to all elements */
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+
+/* TODO: This belongs in the framework, not the reset. */
+/* Add the correct font weight in Chrome, Edge, and Safari. (Normalize) */
+b, strong { font-weight: bolder; }
+
+/* TODO: This belongs in the framework, not the reset. */
+/* Add the correct font size in all browsers (Normalize) */
+small { font-size: 80%; }
+
+/* Prevent `sub` and `sup` elements from affecting the line height in all browsers. (Normalize) */
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub { bottom: -0.25em; }
+sup { top: -0.5em; }
+
+/* TODO: This belongs in the framework, not the reset. */
+/* TODO: Test that this is still needed. */
+/* 1. Change the font styles in all browsers. (Normalize)
+   2. Remove the margin in Firefox and Safari. (Normalize) */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/* TODO: This belongs in the framework, not the reset. */
+/* TODO: Test that this is still needed. */
+/* Correct the inability to style clickable types in iOS and Safari. (Normalize) */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/* TODO: This belongs in the framework, not the reset. */
+/* TODO: Test that this is still needed. */
+/* Remove the inner border and padding in Firefox. (Normalize) */
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/* TODO: This belongs in the framework, not the reset. */
+/* TODO: Test that this is still needed. */
+/* Fix the cursor style for Chrome's increment/decrement buttons. For certain `font-size` values of the `input`, it causes the cursor style of the decrement button to change from `default` to `text`. (Normalize) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+
+/* TODO: This belongs in the framework, not the reset. */
+/* TODO: Test that this is still needed. */
+/* 1. Correct the odd appearance in Chrome and Safari. (Normalize)
+   2. Correct the outline style in Safari. (Normalize) */
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/* Remove the inner padding in Chrome and Safari on macOS. (Normalize) */
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+iframe,
+object,
+embed,
+canvas,
+progress {
+  width: 100%; /* Make responsive (cd-reset) */
+  vertical-align: middle; /* Remove the "baseline" space weirdness (cd-reset) */
+}
+
+video,
+img {
+  vertical-align: middle; /* Remove the "baseline" space weirdness (cd-reset) */
+}
+
+/* Embedded contexts should be big and beefy! (cd-reset) */
+iframe,
+object,
+embed,
+canvas,
+progress,
+video {
+  display: block;
+}
+
+/* Remove the 2px border around iframes (cd-reset) */
+iframe {
+  border: 0;
+}
+
+
+// submodule/house-style/vars.css
+:root {
+
+  /* COLORS **************************************************************************************/
+
+  /* SITE */
+  --bg-xxl:       hsl(217, 70%, 70%);
+  --bg-xl:        hsl(219, 60%, 57%);
+  --bg-l:         hsl(220, 50%, 50%);
+  --bg-m:         hsl(224, 47%, 45%);
+  --bg-d:         hsl(227, 45%, 40%);
+  --bg-xd:        hsl(230, 50%, 30%);
+
+  /* SHADE */
+  --mist:         hsl(220, 10%, 92%);
+  --silver:       hsl(220, 15%, 80%);
+  --grey:         hsl(220, 9%, 52%);
+  --smoke:        hsl(227, 15%, 25%);
+  --tar:          hsl(233, 30%, 17%);
+  --onyx:         hsl(240, 50%, 5%);
+
+  /* KEY */
+  --red:          hsl(358, 80%, 55%);
+  --orange:       hsl(24, 100%, 60%);
+  --yellow:       hsl(43, 100%, 50%);
+  --green:        hsl(130, 85%, 35%);
+  --blue: 	      hsl(223, 45%, 45%);
+  --indigo:       hsl(270, 50%, 58%);
+  --violet:       hsl(330, 55%, 50%);
+
+  /* SPECIAL */
+  --blood-orange: hsl(18, 100%, 60%);
+  --blueberry:    hsl(259, 65%, 65%);
+  --bronze:       hsl(43, 50%, 70%);
+  --brown:        hsl(23, 40%, 46%);
+  --mint:         hsl(153, 80%, 41%);
+  --maroon:       hsl(359, 65%, 40%);
+  --navy:         hsl(233, 52%, 22%);
+  --navy-dark:    hsl(235, 60%, 14%);
+  --olive:        hsl(166, 90%, 20%);
+  --pink:         hsl(357, 100%, 75%);
+  --purple:       hsl(255, 49%, 37%);
+  --teal:         hsl(180, 100%, 32%);
+  --fuscha:       hsl(340, 60%, 50%);
+  --ghost:        rgba(white, 0.05);
+  --demon:        rgba(black, 0.05);
+
+  /* HYDRAULIC PRESSURE */
+  --atmospheric-pressure: #00F;
+  --no-pressure: #00F;
+  --low-pressure: #FF0;
+  --medium-pressure: #F70;
+  --high-pressure: #F00;
+  --vacuum-pressure: #F0F;
+
+  /* ELECTRICAL */
+  --ground-voltage: #000;
+  --min-voltage: #FFD800;
+  --medium-voltage: #7fd97f;
+  --max-voltage: #00DAFF;
+  --magnetic-field: #8D02FF;
+
+  /* OTHER */
+  --cdig-blue: #0063BE;
+  --dark-blue: #0045AF;
+  --light-blue: #0084AF;
+  --light-green: #99ff66;
+  --off-white: hsl(220, 45%, 96%);
+
+  /* GRADIENTS */
+  --bg-gradient: linear-gradient(to right, var(--bg-d), var(--bg-l), var(--bg-d));
+
+
+  /* COMMON **************************************************************************************/
+
+  /* FONTS */
+  --lbs-fonts: LBSLato, Lato, "Trebuchet MS", sans-serif;
+  --system-fonts: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  /* LBS */
+  --header-height: 48px;
+}
+
+
+// scss/body.scss
+body {
+  background: #fafafa;
+  padding-top: var(--header-height);
+}
+
+
+// scss/button-group.scss
+button-group {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+// scss/button.scss
+button,
+.button {
+  display: inline-block;
+  padding: .6em .8em;
+  border: 2px solid transparent; // Prepare for :focus-visible
+  outline: none;
+  border-radius: 4px;
+  line-height: 1; // If you don't have this, buttons will sometimes be different heights if they contain characters that aren't included in our subset version of Lato
+  text-align: center;
+  text-decoration: none; // Override <a> default
+  color: white;
+  background-color: var(--bg-xl);
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(white, 0);
+
+  &:hover { opacity: .75; } // We'd prefer to darken the color, but that will have to wait for CSS Color Level 5
+  &:active { opacity: .5; }
+  &:focus-visible { border-color: white; }
+}
+
+button-group > button:not(:first-of-type) { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 1px; }
+button-group > button:not(:last-of-type) { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+
+
+// scss/header.scss
+header {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  border-bottom: 1px solid hsla(227, 45%, 40%, .5);
+  color: white;
+  background: var(--bg-gradient);
+  box-shadow: 0 2px 6px hsla(227, 45%, 40%, .6);
+}
+
+
+// scss/html.scss
+html {
+  text-align: center;
+  font-family: var(--lbs-fonts);
+  line-height: 1.3;
+  color: black;
+  background: white;
+}
+
+
+// scss/section.scss
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: .5em;
+  margin: .5em;
+  background: #fff;
+
+  & > * {
+    margin: 0 1em;
+  }
+}
+
+
+// scss/title-ending-byline.scss
+#title, #ending {
+  margin: 0;
+  padding: 3vw 4vw;
+  text-align: center;
+  font-weight: 900;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: white;
+  background: var(--smoke);
+
+  em {
+    display: inline-block;
+  }
+}
+
+#title {
+  font-size: 5vw;
+  @media (max-width: 550px) { font-size: 1.5rem; }
+  @media (min-width: 1200px) { font-size: 3rem; }
+}
+
+#ending {
+  font-size: 2.5vw;
+  padding-bottom: 0;
+  @media (max-width: 750px) { font-size: 1.1rem; }
+  @media (min-width: 1250px) { font-size: 1.5rem; }
+}
+
+#byline {
+  margin: 0;
+  padding: 0 3vw 2.5vw;
+  text-align: center;
+  font-weight: normal;
+  color: var(--silver);
+  background: var(--smoke);
+  font-size: 1.5vw;
+  text-align: center;
+
+  @media (max-width: 900px) { font-size: 0.8rem; }
+  @media (min-width: 1500px) { font-size: 1.1rem; }
+
+  left {
+    display: inline-block;
+    text-align: left;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 1vw 1vw 0;
+    line-height: 1;
+    font-size: 0.8em;
+
+    img {
+      display: inline-block;
+      width: 5em;
+      margin-right: .4em;
+      border-radius: 5em;
+      border: 2px solid black;
+      vertical-align: middle;
+    }
+
+    b {
+      font-size: 1.1em;
+    }
+  }
 }

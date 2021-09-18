@@ -1,28 +1,31 @@
 {
   "name": "Whistle",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "UNLICENSED",
   "main": "build/main.js",
   "scripts": {
-    "coffee:assemble": "fd . -e coffee coffee | xargs awk '(FNR==1){print \"\\n\\n# \" FILENAME}1' node_modules/take-and-make/source/*.coffee node_modules/doom/*.coffee > build/app.coffee",
-    "coffee:build": "coffee --bare --inline-map --output build/app.js --compile build/app.coffee",
-    "coffee:compile": "run-s coffee:assemble coffee:build",
-    "coffee:watch": "onchange 'coffee/**/*.coffee' -- npm run coffee:compile",
+    "coffee:assemble": "fd . -e coffee coffee | xargs awk '(FNR==1){print \"\\n\\n# \" FILENAME}1' submodule/bucket/monkey-patch.coffee node_modules/take-and-make/source/*.coffee node_modules/doom/*.coffee > build/app.coffee",
+    "coffee:compiler": "coffee --bare --inline-map --output build/app.js --compile build/app.coffee",
+    "coffee:generate": "run-s coffee:assemble coffee:compiler",
+    "coffee:observer": "onchange 'submodule/bucket/monkey-patch.coffee' 'coffee/**/*.coffee' -- yarn run coffee:generate",
     "scss:assemble": "fd . -e scss scss | xargs awk '(FNR==1){print \"\\n\\n// \" FILENAME}1' submodule/house-style/*.css > build/app.scss",
-    "scss:build": "sass build/app.scss build/app.css --no-source-map",
-    "scss:compile": "run-s scss:assemble scss:build",
-    "scss:watch": "onchange 'scss/**/*.scss' -- npm run scss:compile",
+    "scss:compiler": "sass build/app.scss build/app.css --no-source-map",
+    "scss:generate": "run-s scss:assemble scss:compiler",
+    "scss:observer": "onchange 'scss/**/*.scss' -- yarn run scss:generate",
+    "deps": "cp node_modules/d3-color/dist/d3-color.min.js build",
     "electron": "electron .",
-    "start": "npm-run-all *:compile --parallel *:watch electron"
+    "build": "npm-run-all deps *:generate",
+    "watch": "npm-run-all --parallel *:observer",
+    "start": "npm-run-all build watch"
   },
-  "dependencies": {
-    "doom": "ivanreese/doom",
-    "take-and-make": "cdig/take-and-make"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "electron": "12.0.0-beta.14",
-    "electron-reload": "^1.5.0",
-    "npm-run-all": "^4.1.5",
-    "onchange": "^7.1.0"
+    "d3-color": "^3.0.1",
+    "doom": "ivanreese/doom",
+    "electron": "15.0.0-alpha.10",
+    "npm-run-all": "latest",
+    "onchange": "latest",
+    "sass": "latest",
+    "take-and-make": "cdig/take-and-make"
   }
 }

@@ -2,5 +2,6 @@ build/app.coffee
 build/app.css
 build/app.js
 build/app.scss
+build/d3-color.min.js
 node_modules
 yarn.lock

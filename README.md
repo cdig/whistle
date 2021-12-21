@@ -8,4 +8,4 @@ Run `yarn` to install deps.
 
 Run `git submodule update --init --recursive` to install house-style (I think).
 
-Then `npm start` to compile and watch.
+Then `cake start` to build and watch.

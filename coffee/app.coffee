@@ -1,39 +1,74 @@
 Take ["DOOM", "DOMContentLoaded"], (DOOM)->
-  nodes = [
-    ["h1", {id: "title"}, "Energy Basics"]
-    ["section", {},
-      ["object", {data: "https://cdn.lunchboxsessions.com/v4-1/c1a8e483b1fb1164d0c511c2572f6109.html"}]
-      ["div",
-        ["h1", "Objectives"]
-        ["p", "In this lesson, we'll discuss the meaning and measurement of basic physics concepts that apply to hydraulic systems: energy, force, work, power, torque, and horsepower."]
-      ]
-    ]
-    ["section", {},
-      ["div", {}, ["h3", {textContent: "In a div"}]]
-      ["div", {}, ["h3", {textContent: "In a div"}]]
-    ]
-  ]
 
+  renderNodes = (data, nodes)->
+    for node in nodes
+      renderNode data, node
 
-  renderElement = (parent, [tag, ...contents])->
-    if (contents[0] instanceof Object) and not (contents[0] instanceof Array)
-      attrs = contents.shift()
+  renderNode = (data, [block, attrs, ...contents])->
+    blockFn = getBlockFn block
+    elmTemplate = blockFn data, attrs, contents
 
-    if attrs?.data?
-      attrs.data = attrs.data.replace "//cdn.", "//cdn-dev."
+    # Some html attrs will be generated dynamically
+    dynAttrs =
+      "#{block.toLowerCase()}-block": "" # Name of the block, like "text-block"
 
+    # Merge the author-provided html attrs with the dynamic attrs into the attrs from the template
+    Object.assign elmTemplate[1], dynAttrs, attrs
+
+    if elmTemplate[2] instanceof Array
+      elmTemplate.splice 2, 1, renderNodes data, elmTemplate[2]
+
+    elmTemplate
+
+  getBlockFn = (blockName)->
+    blocks[blockName] || blocks.default
+
+  renderElement = (parent, [tag, attrs, contents])->
     elm = DOOM.create tag, parent, attrs
 
-    if typeof contents[0] is "string"
-      DOOM elm, textContent: contents[0]
-    else if contents.length > 0
-      renderElement elm, child for child in contents
+    if typeof contents is "string"
+      DOOM elm, textContent: contents
+    else if contents?.length > 0
+      renderElements elm, contents
+
+  renderElements = (parent, elements)->
+    for element in elements
+      renderElement parent, element
 
 
-  render = (root)->
-    DOOM.empty root
-    for node in nodes
-      renderElement root, node
+  # DATA ##########################################################################################
 
 
-  render document.querySelector "main"
+  blocks =
+    default:   (data, attrs, contents)-> ["div", {}, contents]
+    "Title":   (data, attrs, contents)-> ["h1", {}, data.title]
+    "Image":   (data, attrs, contents)-> ["img", {src: contents[0]}]
+    "Heading": (data, attrs, contents)-> ["h1", {}, contents[0]]
+    "Text":    (data, attrs, contents)-> ["p", {}, contents[0]]
+
+  data =
+    title: "Energy Basics"
+    # Nodes are a minimal representation of the lesson content.
+    # We should try to keep them very general, so that we can make changes to
+    # the design of the blocks without having to update all our nodes.
+    nodes: [
+      ["Title"]
+      ["Page", {},
+        ["Main", {},
+          ["Row", {},
+            ["Image", {}, "images/system.png"]
+            ["Unit", {},
+              ["Heading", {alignLeft:""}, "Objectives"]
+              ["Text", {}, "In this lesson, we'll discuss the meaning and measurement of basic physics concepts that apply to hydraulic systems: energy, force, work, power, torque, and horsepower."]
+            ]
+          ]
+        ]
+      ]
+    ]
+
+  # INIT ##########################################################################################
+
+  root = document.querySelector "main"
+  DOOM.empty root
+  elements = renderNodes data, data.nodes
+  renderElements root, elements

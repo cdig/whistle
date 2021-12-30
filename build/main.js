@@ -1,7 +1,9 @@
+fs = require("fs");
+
 var { app, BrowserWindow } = require("electron");
 
 app.on("ready", () => {
-  new BrowserWindow({
+  let win = new BrowserWindow({
     width: 1707,
     height: 960,
     titleBarStyle: "hiddenInset",
@@ -10,7 +12,11 @@ app.on("ready", () => {
       contextIsolation: true,
       nodeIntegration: false
     }
-  }).loadFile("build/index.html");
+  });
+
+  win.loadFile("build/index.html");
+
+  fs.watch("build", {recursive: true, persistent: false}, ()=>win.reload());
 });
 
 app.on("window-all-closed", () => {

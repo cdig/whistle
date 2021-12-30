@@ -1,0 +1,54 @@
+[title-block], [ending-block] {
+  padding: .75em 1em;
+  font-weight: 900;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: white;
+  background: var(--smoke);
+
+  em {
+    display: inline-block;
+  }
+}
+
+[title-block] {
+  font-size: 3em;
+}
+
+[ending-block] {
+  font-size: 1.5em;
+}
+
+[page-block] {
+  padding: calc(4vw + 1em) 0;
+}
+
+[main-block] {
+  padding: calc(3vw + 1em) 0;
+}
+
+[row-block] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > * {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
+[heading-block] {
+  font-size: 2.1em; // ms 5
+  color: var(--blue);
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+[text-block] {
+  max-width: var(--maxLineLength);
+  margin: 1em auto;
+  text-align: left;
+}

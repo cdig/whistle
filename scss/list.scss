@@ -1,0 +1,50 @@
+ul, ol {
+  max-width: var(--maxLineLength);
+  margin: 1em auto;
+  padding-left: 1em;
+  padding-right: .3em;
+
+  li + li { margin-top: .5em; }
+
+  ul, ol {
+    margin-top: .5em;
+    padding-right: 0;
+
+    li + li { margin-top: .2em; }
+  }
+}
+
+ul {
+  list-style-type: square;
+
+  ul { list-style-type: circle; }
+}
+
+ol {
+  counter-reset: item;
+
+  li {
+    display: flex;
+    align-items: top;
+
+    &:before {
+      counter-increment: item;
+      content: counter(item) " ";
+      flex: 0 0 auto;
+      width: 1.8em;
+      height: 1.8em;
+      line-height: 1.8em;
+      margin-right: .7em;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 0.7em;
+      border-radius: 1em;
+      color: white;
+      background: black;
+
+      // Override any module author styling
+      font-weight: normal;
+      font-style: normal;
+    }
+  }
+}

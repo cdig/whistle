@@ -1,5 +1,6 @@
-build/images
 build/app*
 build/d3-color.min.js
+build/data.json
+build/images
 node_modules
 yarn.lock

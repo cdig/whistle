@@ -9,8 +9,8 @@ app.on("ready", () => {
     titleBarStyle: "hiddenInset",
     backgroundColor: "#fff",
     webPreferences: {
-      contextIsolation: true,
-      nodeIntegration: false
+      contextIsolation: false,
+      nodeIntegration: true
     }
   });
 

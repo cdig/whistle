@@ -1,16 +1,41 @@
+fs = require "fs"
+
 Take ["DOOM", "DOMContentLoaded"], (DOOM)->
+
+  languageIndex = 0
+  languages = ["English", "Spanish"]
+
+  blocks =
+    default:       (data, attrs, contents)-> ["div", {}, contents]
+    "Title":       (data, attrs, contents)-> ["h1", {}, contents[0]]
+    "Image":       (data, attrs, contents)-> ["img", {src: contents[0]}]
+    "Heading":     (data, attrs, contents)-> ["h1", {}, contents[0]]
+    "Text":        (data, attrs, contents)-> ["p", {}, contents[0]]
+    "BulletList":  (data, attrs, contents)-> ["ul", {}, contents]
+    "ListItem":    (data, attrs, contents)-> ["li", {}, contents[0]]
+    "Caption":     (data, attrs, contents)-> ["div", {class: "caption"}, contents[0]]
+
 
   renderNodes = (data, nodes)->
     for node in nodes
       renderNode data, node
 
+  toKebab = (s)->
+    s.replace(/([a-z])([A-Z])/g,"$1-$2").toLowerCase()
+
   renderNode = (data, [block, attrs, ...contents])->
+
+    if attrs?.i?
+      languageName = languages[languageIndex]
+      strings = data.languages[languageName]
+      contents = [strings[attrs.i]]
+
     blockFn = getBlockFn block
     elmTemplate = blockFn data, attrs, contents
 
     # Some html attrs will be generated dynamically
     dynAttrs =
-      "#{block.toLowerCase()}-block": "" # Name of the block, like "text-block"
+      "#{toKebab block}-block": "" # Name of the block, like "text-block"
 
     # Merge the author-provided html attrs with the dynamic attrs into the attrs from the template
     Object.assign elmTemplate[1], dynAttrs, attrs
@@ -27,7 +52,7 @@ Take ["DOOM", "DOMContentLoaded"], (DOOM)->
     elm = DOOM.create tag, parent, attrs
 
     if typeof contents is "string"
-      DOOM elm, textContent: contents
+      DOOM elm, innerHTML: contents
     else if contents?.length > 0
       renderElements elm, contents
 
@@ -35,40 +60,25 @@ Take ["DOOM", "DOMContentLoaded"], (DOOM)->
     for element in elements
       renderElement parent, element
 
+  render = (data)->
+    DOOM.empty root
+    elements = renderNodes data, data.nodes
+    renderElements root, elements
 
-  # DATA ##########################################################################################
-
-
-  blocks =
-    default:   (data, attrs, contents)-> ["div", {}, contents]
-    "Title":   (data, attrs, contents)-> ["h1", {}, data.title]
-    "Image":   (data, attrs, contents)-> ["img", {src: contents[0]}]
-    "Heading": (data, attrs, contents)-> ["h1", {}, contents[0]]
-    "Text":    (data, attrs, contents)-> ["p", {}, contents[0]]
-
-  data =
-    title: "Energy Basics"
-    # Nodes are a minimal representation of the lesson content.
-    # We should try to keep them very general, so that we can make changes to
-    # the design of the blocks without having to update all our nodes.
-    nodes: [
-      ["Title"]
-      ["Page", {},
-        ["Main", {},
-          ["Row", {},
-            ["Image", {}, "images/system.png"]
-            ["Unit", {},
-              ["Heading", {alignLeft:""}, "Objectives"]
-              ["Text", {}, "In this lesson, we'll discuss the meaning and measurement of basic physics concepts that apply to hydraulic systems: energy, force, work, power, torque, and horsepower."]
-            ]
-          ]
-        ]
-      ]
-    ]
 
   # INIT ##########################################################################################
 
   root = document.querySelector "main"
-  DOOM.empty root
-  elements = renderNodes data, data.nodes
-  renderElements root, elements
+  data = JSON.parse fs.readFileSync "build/data.json"
+  render data
+
+
+  # Buttons #######################################################################################
+
+  languageButton = document.querySelector "[btn-language]"
+  unitsButton = document.querySelector "[btn-units]"
+  themeButton = document.querySelector "[btn-theme]"
+
+  languageButton.addEventListener "click", ()->
+    languageIndex = ++languageIndex % languages.length
+    render data

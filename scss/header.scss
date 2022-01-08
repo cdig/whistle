@@ -8,7 +8,7 @@ header {
   width: 100%;
   height: var(--header-height);
   border-bottom: 1px solid hsla(227, 45%, 40%, .5);
-  color: white;
+  color: var(--theme-header-color);
   background: var(--bg-gradient);
   box-shadow: 0 2px 6px hsla(227, 45%, 40%, .6);
 }

@@ -1,0 +1,26 @@
+// Default: light mode
+html {
+  --theme-background: white;
+  --theme-color: black;
+  --theme-header-color: white;
+  --theme-title-block-background: var(--smoke);
+  --theme-heading-block-color: var(--blue);
+  --theme-dfn-color: var(--blue);
+  --theme-caption-border-top-color: var(--off-white);
+  --theme-caption-color: var(--grey);
+}
+
+html.dark {
+  --theme-background: hsl(240, 10%, 10%);
+  --theme-color: white;
+  --theme-header-color: black;
+  --theme-title-block-background: hsl(230, 25%, 15%);
+  --theme-heading-block-color: var(--yellow);
+  --theme-dfn-color: var(--yellow);
+  --theme-caption-border-top-color: var(--smoke);
+  --theme-caption-color: var(--silver);
+
+  img {
+    filter: invert(100%);
+  }
+}

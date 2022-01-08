@@ -77,8 +77,30 @@ Take ["DOOM", "DOMContentLoaded"], (DOOM)->
 
   languageButton = document.querySelector "[btn-language]"
   unitsButton = document.querySelector "[btn-units]"
-  themeButton = document.querySelector "[btn-theme]"
 
   languageButton.addEventListener "click", ()->
     languageIndex = ++languageIndex % languages.length
     render data
+
+  # Light / Dark Mode #############################################################################
+
+  updateTheme = (isDark)->
+    document.documentElement.classList.toggle "dark", isDark
+    document.documentElement.classList.toggle "light", !isDark
+
+  # This will store which theme the user has selected, if any
+  isDark = null
+
+  # You can use the button to manually set the theme
+  themeButton = document.querySelector "[btn-theme]"
+  themeButton.addEventListener "click", ()->
+    isDark ?= window.matchMedia("(prefers-color-scheme: dark)").matches
+    isDark = !isDark
+    updateTheme isDark
+
+  # But until the theme is manually set, we'll just match the OS whenever it changes
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener "change", (e)->
+    updateTheme e.matches unless isDark?
+
+  # And here we do the initial sync to the OS setting
+  updateTheme window.matchMedia("(prefers-color-scheme: dark)").matches

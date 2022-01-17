@@ -7,3 +7,9 @@ main {
   @media (min-width: 2000px) { font-size: 23px; }
   @media (min-width: 2350px) { font-size: 24px; }
 }
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}

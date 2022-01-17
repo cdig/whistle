@@ -1,0 +1,15 @@
+article {
+  position: relative;
+  background: var(--theme-article-background);
+}
+
+article#wide {
+  flex: 1 1 100%;
+}
+
+article#thin {
+  flex: 0 0 320px;
+  width: 320px;
+  margin-left: var(--article-gutter-width);
+  font-size: 18px; // override main.scss
+}

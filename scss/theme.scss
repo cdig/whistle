@@ -1,6 +1,7 @@
 // Default: light mode
 html {
-  --theme-background: white;
+  --theme-background: var(--mist);
+  --theme-article-background: white;
   --theme-color: black;
   --theme-header-color: white;
   --theme-title-block-background: var(--smoke);
@@ -11,7 +12,8 @@ html {
 }
 
 html.dark {
-  --theme-background: hsl(240, 10%, 10%);
+  --theme-background: var(--smoke);
+  --theme-article-background: hsl(240, 10%, 10%);
   --theme-color: white;
   --theme-header-color: black;
   --theme-title-block-background: hsl(230, 25%, 15%);

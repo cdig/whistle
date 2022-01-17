@@ -1,0 +1,47 @@
+.medium-editor-element {
+  word-wrap: unset;
+  overflow-wrap: unset;
+
+  &:focus-visible {
+    outline: unset;
+  }
+}
+
+.medium-editor-toolbar {
+  border-radius: 8px;
+  background: var(--theme-color);
+
+  li button {
+    transition: none;
+    color: var(--theme-background);
+
+    &:hover {
+      color: var(--theme-background);
+      background-color: transparent;
+    }
+
+    &.medium-editor-button-active {
+      color: var(--yellow);
+      background-color: transparent;
+      &:hover {
+        color: var(--yellow);
+      }
+    }
+  }
+}
+
+.medium-toolbar-arrow-over {
+  &:before {
+    background: transparent transparent #000 transparent;
+  }
+}
+
+.medium-editor-toolbar-anchor-preview {
+  background: var(--theme-color);
+  border-radius: 8px;
+  padding: 0 .5em;
+
+  a {
+    color: var(--theme-background);
+  }
+}

@@ -1,0 +1,37 @@
+.meta {
+  [block] {
+    outline: 1px solid purple;
+  }
+}
+
+[editing] {
+  position: relative;
+  z-index: 2;
+
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--yellow);
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  &:after {
+    content: attr(block);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 4px;
+    font-size: 1rem;
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing: normal;
+    font-family: var(--system-fonts);
+    color: var(--theme-background);
+    background-color: var(--theme-color);
+    pointer-events: none;
+  }
+}

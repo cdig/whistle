@@ -4,13 +4,13 @@
   "license": "UNLICENSED",
   "main": "build/main.js",
   "devDependencies": {
-    "chokidar": "^3.5.2",
-    "coffeescript": "^2.6.1",
-    "cson-parser": "^4.0.9",
-    "d3-color": "^3.0.1",
+    "chokidar": "3.5.2",
+    "coffeescript": "2.6.1",
+    "cson-parser": "4.0.9",
+    "d3-color": "3.0.1",
     "doom": "ivanreese/doom",
-    "electron": "^16.0.2",
-    "sass": "^1.45.0",
+    "electron": "16.0.2",
+    "sass": "1.45.0",
     "take-and-make": "cdig/take-and-make"
   }
 }
